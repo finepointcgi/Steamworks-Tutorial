@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Steam/SteamManager.cs" type="Script" id=1]
+[ext_resource path="res://SteamInterface.cs" type="Script" id=2]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 476.0
+margin_bottom = 334.0
+script = ExtResource( 2 )
+
+[node name="PrintFriends" type="Button" parent="Control"]
+margin_left = 58.0
+margin_top = 40.0
+margin_right = 279.0
+margin_bottom = 85.0
+text = "Print Friends"
+
+[node name="Get Achevements" type="Button" parent="Control"]
+margin_left = 62.0
+margin_top = 107.0
+margin_right = 279.0
+margin_bottom = 157.0
+rect_pivot_offset = Vector2( 270, 83 )
+text = "Get Achevements"
+
+[node name="Acheve Test Achevements" type="Button" parent="Control"]
+margin_left = 62.0
+margin_top = 176.0
+margin_right = 279.0
+margin_bottom = 226.0
+rect_pivot_offset = Vector2( 270, 83 )
+text = "Acheve Test Achevements"
+
+[node name="CreateLeaderBoard" type="Button" parent="Control"]
+margin_left = 65.0
+margin_top = 247.0
+margin_right = 281.0
+margin_bottom = 293.0
+text = "Create Leaderboard"
+
+[node name="FetchLeaderBoardScores" type="Button" parent="Control"]
+margin_left = 67.0
+margin_top = 312.0
+margin_right = 281.0
+margin_bottom = 369.0
+text = "Fetch LeaderBoard Scores"
+
+[node name="SaveToCloud" type="Button" parent="Control"]
+margin_left = 69.0
+margin_top = 384.0
+margin_right = 281.0
+margin_bottom = 443.0
+text = "Save To Cloud"
+
+[node name="LoadFromCloud" type="Button" parent="Control"]
+margin_left = 69.0
+margin_top = 451.0
+margin_right = 281.0
+margin_bottom = 510.0
+text = "Load From Cloud"
+
+[connection signal="button_down" from="Control/PrintFriends" to="Control" method="_on_PrintFriends_button_down"]
+[connection signal="button_down" from="Control/Get Achevements" to="Control" method="_on_Get_Achevements_button_down"]
+[connection signal="button_down" from="Control/Acheve Test Achevements" to="Control" method="_on_Acheve_Test_Achevements_button_down"]
+[connection signal="button_down" from="Control/CreateLeaderBoard" to="Control" method="_on_CreateLeaderBoard_button_down"]
+[connection signal="button_down" from="Control/FetchLeaderBoardScores" to="Control" method="_on_FetchLeaderBoardScores_button_down"]
+[connection signal="button_down" from="Control/SaveToCloud" to="Control" method="_on_SaveToCloud_button_down"]
+[connection signal="button_down" from="Control/LoadFromCloud" to="Control" method="_on_LoadFromCloud_button_down"]

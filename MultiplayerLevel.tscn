@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://SceneManager.cs" type="Script" id=1]
+[ext_resource path="res://Steam/SteamManager.cs" type="Script" id=2]
+[ext_resource path="res://LobbyElement.tscn" type="PackedScene" id=3]
+
+[node name="MultiplayerLevel" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Control" type="Control" parent="."]
+margin_top = 12.0
+margin_right = 1025.0
+margin_bottom = 588.0
+script = ExtResource( 1 )
+LobbyElement = ExtResource( 3 )
+
+[node name="CreateLobby" type="Button" parent="Control"]
+margin_left = 51.0
+margin_top = 25.0
+margin_right = 280.0
+margin_bottom = 88.0
+text = "Create Lobby"
+
+[node name="GetLobbies" type="Button" parent="Control"]
+margin_left = 51.0
+margin_top = 103.0
+margin_right = 280.0
+margin_bottom = 166.0
+text = "Get Lobbies"
+
+[node name="Lobby Container" type="VBoxContainer" parent="Control"]
+margin_left = 313.0
+margin_top = 15.0
+margin_right = 675.0
+margin_bottom = 211.0
+
+[connection signal="button_down" from="Control/CreateLobby" to="Control" method="_on_CreateLobby_button_down"]
+[connection signal="button_down" from="Control/GetLobbies" to="Control" method="_on_GetLobbies_button_down"]

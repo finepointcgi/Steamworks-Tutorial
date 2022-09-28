@@ -1,0 +1,11 @@
+<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>SteamworksTutorial</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+      <Reference Include="Facepunch.Steamworks.Win64">
+        <HintPath>./DLL/Facepunch.Steamworks.Win64.dll</HintPath>
+        </Reference>
+  </ItemGroup>
+</Project>
