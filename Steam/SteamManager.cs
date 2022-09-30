@@ -96,7 +96,7 @@ public class SteamManager : Node2D
             {
                 OnPlayerJoinLobby(item);
             }
-
+            lobby.SetGameServer(PlayerSteamID.AccountId);
         }else{
             GD.Print("You have joined your own lobby");
         }

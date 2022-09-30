@@ -62,6 +62,7 @@ public class SceneManager : Control
     }
 
     private void _on_LobbyButton_button_down(){
+        var test = SteamManager.Manager.SteamConnectionManager.Connection;
         SteamManager.Manager.SteamConnectionManager.Connection.SendMessage("test");
     }
 }

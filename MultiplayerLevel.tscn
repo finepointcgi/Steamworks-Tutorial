@@ -61,3 +61,4 @@ text = "Ready"
 [connection signal="button_down" from="Control/CreateLobby" to="Control" method="_on_CreateLobby_button_down"]
 [connection signal="button_down" from="Control/GetLobbies" to="Control" method="_on_GetLobbies_button_down"]
 [connection signal="button_down" from="Control/InviteFriend" to="Control" method="_on_InviteFriend_button_down"]
+[connection signal="button_down" from="Control/LobbyButton" to="Control" method="_on_LobbyButton_button_down"]
