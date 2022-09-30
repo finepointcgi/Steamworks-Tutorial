@@ -28,6 +28,13 @@ margin_right = 280.0
 margin_bottom = 166.0
 text = "Get Lobbies"
 
+[node name="InviteFriend" type="Button" parent="Control"]
+margin_left = 51.0
+margin_top = 190.0
+margin_right = 280.0
+margin_bottom = 253.0
+text = "Invite Friend"
+
 [node name="Lobby Container" type="VBoxContainer" parent="Control"]
 margin_left = 313.0
 margin_top = 15.0
@@ -36,3 +43,4 @@ margin_bottom = 211.0
 
 [connection signal="button_down" from="Control/CreateLobby" to="Control" method="_on_CreateLobby_button_down"]
 [connection signal="button_down" from="Control/GetLobbies" to="Control" method="_on_GetLobbies_button_down"]
+[connection signal="button_down" from="Control/InviteFriend" to="Control" method="_on_InviteFriend_button_down"]

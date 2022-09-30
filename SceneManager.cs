@@ -31,6 +31,10 @@ public class SceneManager : Control
         }
     }
 
+    private void _on_InviteFriend_button_down(){
+        
+    }
+
     private void _on_CreateLobby_button_down(){
         SteamManager.Manager.CreateLobby();
     }

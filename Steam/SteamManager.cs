@@ -51,6 +51,7 @@ public class SteamManager : Node2D
         SteamMatchmaking.OnLobbyMemberDisconnected += OnLobbyMemberDisconnectedCallback;
         SteamMatchmaking.OnLobbyMemberLeave += OnLobbyMemberLeaveCallback;
         SteamMatchmaking.OnLobbyEntered += OnLobbyEnteredCallback;
+        SteamFriends.OnGameLobbyJoinRequested += OnGameLobbyJoinRequestedCallback;
     }
 
     private void OnLobbyMemberDisconnectedCallback(Lobby lobby, Friend friend){
@@ -81,6 +82,7 @@ public class SteamManager : Node2D
     private void OnLobbyEnteredCallback(Lobby lobby){
         if(lobby.MemberCount > 0){
             GD.Print($"You joined {lobby.Owner.Name}'s lobby");
+            hostedLobby = lobby;
 
         }else{
             GD.Print("You have joined your own lobby");
@@ -115,6 +117,20 @@ public class SteamManager : Node2D
         }
     }
 
+    private async void OnGameLobbyJoinRequestedCallback(Lobby lobby, SteamId id){
+        RoomEnter joinSuccessful = await lobby.Join();
+        if(joinSuccessful != RoomEnter.Success){
+            GD.Print("Failed to Join Lobby");
+        }
+        else{
+            hostedLobby = lobby;
+            
+        }
+    }
+
+    public void OpenFriendOverlayForInvite(){
+        SteamFriends.OpenGameInviteOverlay(hostedLobby.Id);
+    }
     public async Task<bool> GetMultiplayerLobbies(){
         try
         {
