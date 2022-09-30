@@ -96,7 +96,7 @@ public class SteamManager : Node2D
             {
                 OnPlayerJoinLobby(item);
             }
-            lobby.SetGameServer(PlayerSteamID.AccountId);
+            lobby.SetGameServer(lobby.Owner.Id);
         }else{
             GD.Print("You have joined your own lobby");
         }
@@ -190,7 +190,8 @@ public class SteamManager : Node2D
 
     public void CreateSteamSocketServer(){
         SteamSocketManager = SteamNetworkingSockets.CreateRelaySocket<SteamSocketManager>(0);
-        SteamConnectionManager = SteamNetworkingSockets.ConnectRelay<SteamConnectionManager>(PlayerSteamID);
+
+        SteamConnectionManager = SteamNetworkingSockets.ConnectRelay<SteamConnectionManager>(PlayerSteamID, 0);
 
         GD.Print("We created our socket server!");
     }

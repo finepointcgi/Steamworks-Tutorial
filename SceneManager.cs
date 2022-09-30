@@ -11,7 +11,7 @@ public class SceneManager : Control
     // private string b = "text";
     [Export]
     public PackedScene LobbyElement;
-        [Export]
+    [Export]
     public PackedScene LobbyPlayer;
 
     // Called when the node enters the scene tree for the first time.
@@ -63,6 +63,15 @@ public class SceneManager : Control
 
     private void _on_LobbyButton_button_down(){
         var test = SteamManager.Manager.SteamConnectionManager.Connection;
-        SteamManager.Manager.SteamConnectionManager.Connection.SendMessage("test");
+        try
+        {
+            SteamManager.Manager.SteamConnectionManager.Connection.SendMessage("test");
+        }
+        catch (System.Exception e)
+        {
+            GD.Print("error sending data: " + e.Message);
+            
+        }
+        
     }
 }
