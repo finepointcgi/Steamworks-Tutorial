@@ -177,6 +177,20 @@ public class SteamManager : Node2D
     public override void _Process(float delta)
     {
         SteamClient.RunCallbacks();
+        try
+        {
+            if (SteamSocketManager != null )
+            {
+                SteamSocketManager.Receive();
+            }
+            if(SteamConnectionManager != null && SteamConnectionManager.Connected){
+                SteamConnectionManager.Receive();
+            }
+        }
+        catch(Exception e)
+        {
+            GD.Print("Error receiving data on socket/connection " + e.Message);
+        }
     }
 
     public override void _Notification(int what)
