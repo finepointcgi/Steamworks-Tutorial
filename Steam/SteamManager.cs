@@ -18,6 +18,11 @@ public class SteamManager : Node2D
     private Lobby hostedLobby {get; set;}
     private List<Lobby> availableLobbies {get; set;} = new List<Lobby>();
     public static event Action<List<Lobby>> OnLobbyRefreshCompleted;
+    public static event Action<Friend> OnPlayerJoinLobby;
+    public static event Action<Friend> OnPlayerLeftLobby;
+    public SteamSocketManager SteamSocketManager;
+    public SteamConnectionManager SteamConnectionManager;
+    public bool IsHost;
     public SteamManager(){
         if (Manager == null){
             Manager = this;
@@ -56,15 +61,17 @@ public class SteamManager : Node2D
 
     private void OnLobbyMemberDisconnectedCallback(Lobby lobby, Friend friend){
         GD.Print("User Has Disconnectd left lobby: " + friend.Name);
+        OnPlayerLeftLobby(friend);
     }
 
     private void OnLobbyMemberLeaveCallback(Lobby lobby, Friend friend){
         GD.Print("User Has left Disconnectd from lobby: " + friend.Name);
+        OnPlayerLeftLobby(friend);
     }
 
     private void OnLobbyMemberJoinedCallback(Lobby lobby, Friend friend){
         GD.Print("User has joined the Lobby: " + friend.Name);
-
+        OnPlayerJoinLobby(friend);
     }
 
     private void OnLobbyCreatedCallback(Result result, Lobby lobby){
@@ -73,6 +80,8 @@ public class SteamManager : Node2D
         }else{
             GD.Print($"Created Lobby! id = {lobby.Id}");
         }
+
+        CreateSteamSocketServer();
     }
 
     private void OnLobbyGameCreatedCallback(Lobby lobby, uint id, ushort port, SteamId steamId){
@@ -83,10 +92,15 @@ public class SteamManager : Node2D
         if(lobby.MemberCount > 0){
             GD.Print($"You joined {lobby.Owner.Name}'s lobby");
             hostedLobby = lobby;
+            foreach (var item in lobby.Members)
+            {
+                OnPlayerJoinLobby(item);
+            }
 
         }else{
             GD.Print("You have joined your own lobby");
         }
+        JoinSteamSocketServer(lobby.Owner.Id);
     }
 
     public async Task<bool> CreateLobby(){
@@ -124,7 +138,13 @@ public class SteamManager : Node2D
         }
         else{
             hostedLobby = lobby;
-            
+
+            foreach (var item in lobby.Members)
+            {
+                OnPlayerJoinLobby(item);
+            }
+
+
         }
     }
 
@@ -165,6 +185,20 @@ public class SteamManager : Node2D
         if(what == MainLoop.NotificationWmQuitRequest){
             SteamClient.Shutdown();
             GetTree().Quit();
+        }
+    }
+
+    public void CreateSteamSocketServer(){
+        SteamSocketManager = SteamNetworkingSockets.CreateRelaySocket<SteamSocketManager>(0);
+        SteamConnectionManager = SteamNetworkingSockets.ConnectRelay<SteamConnectionManager>(PlayerSteamID);
+
+        GD.Print("We created our socket server!");
+    }
+
+    public void JoinSteamSocketServer(SteamId host){
+        if(!IsHost){
+            GD.Print("Joining Socket Server!");
+            SteamConnectionManager = SteamNetworkingSockets.ConnectRelay<SteamConnectionManager>(host, 0);
         }
     }
 }
