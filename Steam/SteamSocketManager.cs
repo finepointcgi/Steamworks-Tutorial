@@ -27,11 +27,7 @@ public class SteamSocketManager : SocketManager{
     public override void OnMessage(Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel)
     {
         base.OnMessage(connection, identity, data, size, messageNum, recvTime, channel);
-        byte[] managedArray = new byte[size];
-        Marshal.Copy(data, managedArray, 0, size);
-        var str = System.Text.Encoding.Default.GetString(managedArray);
-        System.Collections.Generic.Dictionary<string, string> dict = JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(str);
-        GD.Print("got a socket message!: " + dict["UserID"] + dict["Message"]);
+        DataParser.ProcessData(data, size);
     }
 
 }

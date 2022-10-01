@@ -25,6 +25,6 @@ public class SteamConnectionManager : ConnectionManager{
     public override void OnMessage(IntPtr data, int size, long messageNum, long recvTime, int channel)
     {
         base.OnMessage(data, size, messageNum, recvTime, channel);
-        GD.Print("got a message!");
+        DataParser.ProcessData(data, size);
     }
 }

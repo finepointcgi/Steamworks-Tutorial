@@ -4,6 +4,7 @@ using Steamworks;
 using Steamworks.Data;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 
 public class SteamManager : Node2D
 {
@@ -207,7 +208,7 @@ public class SteamManager : Node2D
         SteamSocketManager = SteamNetworkingSockets.CreateRelaySocket<SteamSocketManager>(0);
 
         SteamConnectionManager = SteamNetworkingSockets.ConnectRelay<SteamConnectionManager>(PlayerSteamID, 0);
-
+        IsHost = true;
         GD.Print("We created our socket server!");
     }
 
@@ -215,6 +216,13 @@ public class SteamManager : Node2D
         if(!IsHost){
             GD.Print("Joining Socket Server!");
             SteamConnectionManager = SteamNetworkingSockets.ConnectRelay<SteamConnectionManager>(host, 0);
+        }
+    }
+
+    public void Broadcast(string data){
+        foreach (var item in SteamSocketManager.Connected.ToArray())
+        {
+            item.SendMessage(data);
         }
     }
 }

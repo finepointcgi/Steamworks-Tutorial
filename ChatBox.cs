@@ -12,7 +12,7 @@ public class ChatBox : Control
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        
+        DataParser.OnChatMessage += OnChatMessageCallback;
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,7 +29,14 @@ public class ChatBox : Control
 
         string json = JsonConvert.SerializeObject(dict);
 
+        if(SteamManager.Manager.IsHost){
+            SteamManager.Manager.Broadcast(json);
+        }else{
+            SteamManager.Manager.SteamConnectionManager.Connection.SendMessage(json);
+        }
+    }
 
-        SteamManager.Manager.SteamConnectionManager.Connection.SendMessage(json);
+    private void OnChatMessageCallback(Dictionary<string,string> data){
+        GetNode<RichTextLabel>("ChatBox").Text = GetNode<RichTextLabel>("ChatBox").Text + System.Environment.NewLine + data["UserID"] + ": " + data["Message"];
     }
 }
