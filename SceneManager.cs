@@ -62,16 +62,6 @@ public class SceneManager : Control
     }
 
     private void _on_LobbyButton_button_down(){
-        var test = SteamManager.Manager.SteamConnectionManager.Connection;
-        try
-        {
-            SteamManager.Manager.SteamConnectionManager.Connection.SendMessage("test");
-        }
-        catch (System.Exception e)
-        {
-            GD.Print("error sending data: " + e.Message);
-            
-        }
-        
+        SteamManager.Manager.SteamConnectionManager.Connection.SendMessage("test");
     }
 }
