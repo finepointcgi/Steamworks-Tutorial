@@ -23,7 +23,7 @@ public class ChatBox : Control
 
     private void _on_Button_button_down(){
         Dictionary<string, string> dict = new Dictionary<string, string>();
-        dict.Add(DataType,"ChatMessage");
+        dict.Add("DataType:","ChatMessage");
         dict.Add("UserID", SteamManager.Manager.PlayerName);
         dict.Add("Message", GetNode<LineEdit>("LineEdit").Text);
 
