@@ -30,12 +30,8 @@ public class SteamSocketManager : SocketManager{
         byte[] managedArray = new byte[size];
         Marshal.Copy(data, managedArray, 0, size);
         var str = System.Text.Encoding.Default.GetString(managedArray);
-        
-        System.Collections.Generic.Dictionary<string, string> dict = JsonConvert.DeserializeObject(str) as System.Collections.Generic.Dictionary<string, string>;
-        if(dict["DataType"] == "ChatMessage"){
-            GD.Print(dict["UserID"] + dict["Message"]);
-        }
-        GD.Print("got a socket message!: " + str);
+        System.Collections.Generic.Dictionary<string, string> dict = JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(str);
+        GD.Print("got a socket message!: " + dict["UserID"] + dict["Message"]);
     }
 
 }
