@@ -26,7 +26,7 @@ public class ChatBox : Control
         dict.Add("DataType","ChatMessage");
         dict.Add("UserID", SteamManager.Manager.PlayerName);
         dict.Add("Message", GetNode<LineEdit>("LineEdit").Text);
-
+        OnChatMessageCallback(dict);
         string json = JsonConvert.SerializeObject(dict);
 
         if(SteamManager.Manager.IsHost){

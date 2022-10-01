@@ -72,7 +72,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.180392, 0.180392, 0.180392, 1 )
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/ChatBox"]
+[node name="ChatBox" type="RichTextLabel" parent="Control/ChatBox"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -32.0

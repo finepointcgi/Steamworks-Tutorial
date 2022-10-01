@@ -220,7 +220,7 @@ public class SteamManager : Node2D
     }
 
     public void Broadcast(string data){
-        foreach (var item in SteamSocketManager.Connected.ToArray())
+        foreach (var item in SteamSocketManager.Connected.Skip(1).ToArray())
         {
             item.SendMessage(data);
         }
