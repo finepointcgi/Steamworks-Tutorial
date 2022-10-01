@@ -3,7 +3,7 @@ using Steamworks.Data;
 using System;
 using Godot;
 using System.Runtime.InteropServices;
-
+using Newtonsoft.Json;
 public class SteamSocketManager : SocketManager{
 
     public override void OnConnected(Connection connection, ConnectionInfo info)
@@ -30,7 +30,12 @@ public class SteamSocketManager : SocketManager{
         byte[] managedArray = new byte[size];
         Marshal.Copy(data, managedArray, 0, size);
         var str = System.Text.Encoding.Default.GetString(managedArray);
-         GD.Print("got a socket message!: " + str);
+        
+        System.Collections.Generic.Dictionary<string, string> dict = JsonConvert.DeserializeObject(str) as System.Collections.Generic.Dictionary<string, string>;
+        if(dict["DataType"] == "ChatMessage"){
+            GD.Print(dict["UserID"] + dict["Message"]);
+        }
+        GD.Print("got a socket message!: " + str);
     }
 
 }
