@@ -24,6 +24,7 @@ public class SteamManager : Node2D
     public SteamSocketManager SteamSocketManager;
     public SteamConnectionManager SteamConnectionManager;
     public bool IsHost;
+
     public SteamManager(){
         if (Manager == null){
             Manager = this;

@@ -11,6 +11,7 @@ public class GameManager
     // private string b = "text";
 
    public static List<Player> CurrentPlayers = new List<Player>();
+    public static SceneManager SceneManager {get; set;}
 
    public static void OnPlayerJoinedLobby(Friend player){
         Player p = new Player();
@@ -33,8 +34,9 @@ public class GameManager
                     {"DataType" , "StartGame"},
                     {"SceneToLoad", "res://GameScene"}
                 };
-            
+
                 SteamManager.Manager.Broadcast(JsonConvert.SerializeObject(readyPacket));
+                SceneManager.OnStartGameCallback(readyPacket);
             }
         }
    }

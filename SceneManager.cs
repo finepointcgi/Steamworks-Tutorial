@@ -13,6 +13,8 @@ public class SceneManager : Control
     public PackedScene LobbyElement;
     [Export]
     public PackedScene LobbyPlayer;
+    [Export]
+    public PackedScene Player;
 
     private bool isPlayerReady;
 
@@ -23,6 +25,8 @@ public class SceneManager : Control
         SteamManager.OnPlayerJoinLobby += OnPlayerJoinLobbyCallback;
         SteamManager.OnPlayerLeftLobby += OnPlayerLeftLobbyCallback;
         DataParser.OnReadyMessage += OnPlayerReadyMessageCallback;
+        DataParser.OnGameStartMessage += OnStartGameCallback;
+        GameManager.SceneManager = this;
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -84,7 +88,19 @@ public class SceneManager : Control
         GameManager.OnPlayerReady(dict);
     }
 
-    public void OnStartGame(Dictionary<string, string> dict){
-        GD.Print("Starting Game");
+    public void OnStartGameCallback(Dictionary<string, string> dict){
+       int i = 1;
+       foreach (var item in GameManager.CurrentPlayers)
+       {
+            var p = Player.Instance() as Player;
+
+            GetNode<Node2D>("../PlayersSpawnPositions/" + i.ToString()).AddChild(p);
+            i ++;
+            p.Name = item.FriendData.Id.AccountId.ToString();
+            p.FriendData = item.FriendData;
+            if(p.Name == SteamManager.Manager.PlayerSteamID.AccountId.ToString()){
+                p.Controlled = true;
+            }
+       }
     }
 }
