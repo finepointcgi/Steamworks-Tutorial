@@ -96,6 +96,20 @@ margin_right = -14.0
 margin_bottom = -7.0
 text = "Send"
 
+[node name="PlayersSpawnPositions" type="Node2D" parent="."]
+
+[node name="1" type="Position2D" parent="PlayersSpawnPositions"]
+position = Vector2( 109, 376 )
+
+[node name="2" type="Position2D" parent="PlayersSpawnPositions"]
+position = Vector2( 296, 374 )
+
+[node name="3" type="Position2D" parent="PlayersSpawnPositions"]
+position = Vector2( 116, 522 )
+
+[node name="4" type="Position2D" parent="PlayersSpawnPositions"]
+position = Vector2( 299, 514 )
+
 [connection signal="button_down" from="Control/CreateLobby" to="Control" method="_on_CreateLobby_button_down"]
 [connection signal="button_down" from="Control/GetLobbies" to="Control" method="_on_GetLobbies_button_down"]
 [connection signal="button_down" from="Control/InviteFriend" to="Control" method="_on_InviteFriend_button_down"]
