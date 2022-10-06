@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Steamworks.Data;
 using Steamworks;
-
+using Newtonsoft.Json;
 public class SceneManager : Control
 {
     // Declare member variables here. Examples:
@@ -14,12 +14,15 @@ public class SceneManager : Control
     [Export]
     public PackedScene LobbyPlayer;
 
+    private bool isPlayerReady;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         SteamManager.OnLobbyRefreshCompleted += OnLobbyRefreshCompletedCallback;
         SteamManager.OnPlayerJoinLobby += OnPlayerJoinLobbyCallback;
         SteamManager.OnPlayerLeftLobby += OnPlayerLeftLobbyCallback;
+        DataParser.OnReadyMessage += OnPlayerReadyMessageCallback;
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,7 +36,7 @@ public class SceneManager : Control
         element.Name = friend.Id.AccountId.ToString(); 
         element.SetPlayerInfo(friend.Name);
         GetNode<VBoxContainer>("Lobby Users").AddChild(element);
-
+        GameManager.OnPlayerJoinedLobby(friend);
     }
 
     private void OnPlayerLeftLobbyCallback(Friend friend){
@@ -62,7 +65,26 @@ public class SceneManager : Control
     }
 
     private void _on_LobbyButton_button_down(){
-        SteamManager.Manager.SteamConnectionManager.Connection.SendMessage("test");
+        isPlayerReady = !isPlayerReady;
+        Dictionary<string, string> playerDict = new Dictionary<string, string>();
+        playerDict.Add("DataType", "Ready");
+        playerDict.Add("PlayerName", SteamManager.Manager.PlayerSteamID.AccountId.ToString());
+        playerDict.Add("IsReady", isPlayerReady.ToString());// True or False
+        string str = JsonConvert.SerializeObject(playerDict);
+        OnPlayerReadyMessageCallback(playerDict);
+        if(SteamManager.Manager.IsHost){
+            SteamManager.Manager.Broadcast(str);
+        }else{
+            SteamManager.Manager.SteamConnectionManager.Connection.SendMessage(str);
+        }
     }
 
+    private void OnPlayerReadyMessageCallback(Dictionary<string, string> dict){
+        GetNode<LobbyPlayer>($"Lobby Users/{dict["PlayerName"]}").SetReadyStatus(bool.Parse(dict["IsReady"]));
+        GameManager.OnPlayerReady(dict);
+    }
+
+    public void OnStartGame(Dictionary<string, string> dict){
+        GD.Print("Starting Game");
+    }
 }

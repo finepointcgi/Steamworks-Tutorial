@@ -6,6 +6,8 @@ using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 public class DataParser {
     public static event Action<Dictionary<string, string>> OnChatMessage;
+    public static event Action<Dictionary<string, string>> OnReadyMessage;
+    public static event Action<Dictionary<string, string>> OnGameStartMessage;
     public static Dictionary<string, string> ParseData(IntPtr data, int size){
         byte[] managedArray = new byte[size];
         Marshal.Copy(data, managedArray, 0, size);
@@ -22,6 +24,12 @@ public class DataParser {
             case "ChatMessage":
                 OnChatMessage.Invoke(dict);
                 break;
+            case "Ready":
+                OnReadyMessage.Invoke(dict);
+                break;
+            case "StartGame":
+                OnGameStartMessage.Invoke(dict);
+                break;  
             default:
                 break;
         }
