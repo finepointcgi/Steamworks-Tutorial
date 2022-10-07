@@ -8,6 +8,7 @@ public class DataParser {
     public static event Action<Dictionary<string, string>> OnChatMessage;
     public static event Action<Dictionary<string, string>> OnReadyMessage;
     public static event Action<Dictionary<string, string>> OnGameStartMessage;
+    public static event Action<Dictionary<string, string>> OnPlayerUpdate;
     public static Dictionary<string, string> ParseData(IntPtr data, int size){
         byte[] managedArray = new byte[size];
         Marshal.Copy(data, managedArray, 0, size);
@@ -30,6 +31,9 @@ public class DataParser {
             case "StartGame":
                 OnGameStartMessage.Invoke(dict);
                 break;  
+            case "UpdatePlayer":
+                OnPlayerUpdate.Invoke(dict);
+                break;
             default:
                 break;
         }
