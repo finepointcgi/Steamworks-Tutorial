@@ -37,6 +37,7 @@ public class Player : KinematicBody2D
             if(Input.IsActionPressed("ui_right")){
                 movementVector += Vector2.Right;
             }
+            
             MoveAndSlide(movementVector * 100, Vector2.Up);
             currentFrame += 1;
             if(currentFrame == targetFrame){
@@ -44,7 +45,7 @@ public class Player : KinematicBody2D
                 currentFrame = 0;
             }
         }else{
-            Position = Position.LinearInterpolate(targetPosition, delta * 10);
+            Position = Position.LinearInterpolate(targetPosition, delta * 15);
         }
     }
 
