@@ -1,18 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://SceneManager.cs" type="Script" id=1]
 [ext_resource path="res://Steam/SteamManager.cs" type="Script" id=2]
 [ext_resource path="res://LobbyElement.tscn" type="PackedScene" id=3]
+[ext_resource path="res://LobbyPlayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ChatBox.cs" type="Script" id=5]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 
 [node name="MultiplayerLevel" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Control" type="Control" parent="."]
-margin_top = 12.0
-margin_right = 1025.0
-margin_bottom = 588.0
+margin_left = 6.0
+margin_top = 42.0
+margin_right = 1031.0
+margin_bottom = 618.0
 script = ExtResource( 1 )
 LobbyElement = ExtResource( 3 )
+LobbyPlayer = ExtResource( 4 )
+Player = ExtResource( 6 )
 
 [node name="CreateLobby" type="Button" parent="Control"]
 margin_left = 51.0
@@ -28,11 +34,86 @@ margin_right = 280.0
 margin_bottom = 166.0
 text = "Get Lobbies"
 
+[node name="InviteFriend" type="Button" parent="Control"]
+margin_left = 51.0
+margin_top = 190.0
+margin_right = 280.0
+margin_bottom = 253.0
+text = "Invite Friend"
+
 [node name="Lobby Container" type="VBoxContainer" parent="Control"]
 margin_left = 313.0
 margin_top = 15.0
 margin_right = 675.0
 margin_bottom = 211.0
+rect_pivot_offset = Vector2( -193, 151 )
+
+[node name="Lobby Users" type="VBoxContainer" parent="Control"]
+margin_left = 313.0
+margin_top = 269.0
+margin_right = 675.0
+margin_bottom = 465.0
+rect_pivot_offset = Vector2( -193, 151 )
+
+[node name="LobbyButton" type="Button" parent="Control"]
+margin_left = 559.0
+margin_top = 471.0
+margin_right = 669.0
+margin_bottom = 512.0
+text = "Ready"
+
+[node name="ChatBox" type="Control" parent="Control"]
+margin_left = 649.0
+margin_top = 79.0
+margin_right = 1014.0
+margin_bottom = 370.0
+script = ExtResource( 5 )
+
+[node name="ColorRect" type="ColorRect" parent="Control/ChatBox"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.180392, 0.180392, 0.180392, 1 )
+
+[node name="ChatBox" type="RichTextLabel" parent="Control/ChatBox"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -32.0
+
+[node name="LineEdit" type="LineEdit" parent="Control/ChatBox"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 7.0
+margin_top = -29.0
+margin_right = 240.0
+margin_bottom = -5.0
+
+[node name="Button" type="Button" parent="Control/ChatBox"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -118.0
+margin_top = -27.0
+margin_right = -14.0
+margin_bottom = -7.0
+text = "Send"
+
+[node name="PlayersSpawnPositions" type="Node2D" parent="."]
+
+[node name="1" type="Position2D" parent="PlayersSpawnPositions"]
+position = Vector2( 109, 376 )
+
+[node name="2" type="Position2D" parent="PlayersSpawnPositions"]
+position = Vector2( 296, 374 )
+
+[node name="3" type="Position2D" parent="PlayersSpawnPositions"]
+position = Vector2( 116, 522 )
+
+[node name="4" type="Position2D" parent="PlayersSpawnPositions"]
+position = Vector2( 299, 514 )
 
 [connection signal="button_down" from="Control/CreateLobby" to="Control" method="_on_CreateLobby_button_down"]
 [connection signal="button_down" from="Control/GetLobbies" to="Control" method="_on_GetLobbies_button_down"]
+[connection signal="button_down" from="Control/InviteFriend" to="Control" method="_on_InviteFriend_button_down"]
+[connection signal="button_down" from="Control/LobbyButton" to="Control" method="_on_LobbyButton_button_down"]
+[connection signal="button_down" from="Control/ChatBox/Button" to="Control/ChatBox" method="_on_Button_button_down"]

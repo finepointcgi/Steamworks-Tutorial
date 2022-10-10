@@ -8,4 +8,7 @@
         <HintPath>./DLL/Facepunch.Steamworks.Win64.dll</HintPath>
         </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
 </Project>
